@@ -1,0 +1,13 @@
+{
+  "name": "langirt-duellosu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Two-player online foosball game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

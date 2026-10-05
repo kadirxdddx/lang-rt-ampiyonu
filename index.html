@@ -4,93 +4,65 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10172a">
-  <title>Langırt Şampiyonu</title>
+  <title>Langırt Düellosu — Arkadaşına meydan oku</title>
   <style>
-    :root { color-scheme: dark; --cream:#fff6df; --mint:#a8f0ca; --coral:#ff806f; }
-    * { box-sizing:border-box; }
-    body { margin:0; min-height:100svh; display:grid; place-items:center; overflow:hidden; color:var(--cream); font-family: ui-rounded, "Segoe UI", system-ui, sans-serif; background:radial-gradient(ellipse at 50% 42%,#273957 0,#17243b 35%,#10172a 76%); }
-    .glow { position:fixed; width:38rem; height:38rem; border-radius:50%; background:#72e7b012; filter:blur(10px); animation:breathe 5s ease-in-out infinite; pointer-events:none; }
-    main { position:relative; width:min(90vw,620px); text-align:center; padding:clamp(28px,7vw,62px) clamp(22px,7vw,60px); border:1px solid #ffffff1b; border-radius:30px; background:linear-gradient(145deg,#ffffff0d,#ffffff04); box-shadow:0 28px 90px #0005,inset 0 1px #ffffff17; backdrop-filter:blur(10px); animation:arrive .8s cubic-bezier(.2,.8,.2,1) both; }
-    .kicker { margin:0 0 13px; color:var(--mint); letter-spacing:.2em; font-size:.72rem; font-weight:800; text-transform:uppercase; }
-    h1 { margin:0; font-size:clamp(2.35rem,8vw,4.5rem); line-height:1; letter-spacing:-.055em; }
-    .subtitle { margin:18px 0 30px; color:#d6dfeb; font-size:clamp(1rem,3vw,1.13rem); }
-    .table { position:relative; width:min(100%,360px); aspect-ratio:1.75; margin:0 auto 32px; overflow:hidden; border:9px solid #d49457; border-radius:18px; background:repeating-linear-gradient(90deg,#317e69 0 50%,#378a71 50% 100%); box-shadow:inset 0 0 0 2px #f3c27a,0 11px 25px #0004; }
-    .table:before { content:""; position:absolute; inset:0 50%; border-left:2px solid #ffffff70; }
-    .table:after { content:""; position:absolute; width:24%; aspect-ratio:1; border:2px solid #ffffff70; border-radius:50%; left:38%; top:50%; transform:translateY(-50%); }
-    .goal { position:absolute; z-index:1; top:32%; height:36%; width:9%; border:2px solid #ffffff9c; }
-    .goal.left { left:-2px; border-left:0; }.goal.right { right:-2px; border-right:0; }
-    .rod { position:absolute; z-index:2; top:0; bottom:0; width:5px; background:#e4bd79; box-shadow:0 0 0 1px #372c2780; }
-    .rod:nth-of-type(1){left:25%}.rod:nth-of-type(2){left:42%}.rod:nth-of-type(3){left:58%}.rod:nth-of-type(4){left:75%}
-    .player { position:absolute; top:50%; left:50%; width:19px; height:40px; border-radius:9px 9px 5px 5px; background:var(--coral); border:2px solid #fff3cf; transform:translate(-50%,-50%); box-shadow:0 3px 0 #8b3f47; animation:wiggle 2.8s ease-in-out infinite; }
-    .player:after { content:""; position:absolute; width:12px; height:12px; top:-9px; left:1px; border-radius:50%; background:#ffe3a0; border:1px solid #fff3cf; }
-    .p2 { background:#f4d35e; animation-delay:-.8s }.p3 { background:#e86fa7; animation-delay:-1.4s }.p4 { background:#80c7ff; animation-delay:-2s }
-    .ball { position:absolute; z-index:3; left:48%; top:48%; width:13px; height:13px; border-radius:50%; background:#fff7e5; box-shadow:0 0 15px #fff9; animation:ball 3s ease-in-out infinite alternate; }
-    button { appearance:none; border:0; border-radius:999px; padding:17px 28px; min-height:58px; max-width:100%; color:#132137; background:var(--mint); font:800 1rem/1.2 inherit; font-family:inherit; font-size:1rem; font-weight:850; cursor:pointer; box-shadow:0 7px 0 #5bb98c,0 12px 24px #0003; transition:transform .18s,box-shadow .18s,background .18s; }
-    button:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 10px 0 #5bb98c,0 16px 28px #0004; }
-    button:active { transform:translateY(4px); box-shadow:0 3px 0 #5bb98c; }
-    button:focus-visible { outline:3px solid white; outline-offset:5px; }
-    #result { margin-top:27px; animation:arrive .5s ease both; }
-    #result[hidden] { display:none; }
-    #result h2 { margin:0 0 12px; color:var(--mint); font-size:clamp(1.45rem,5vw,2rem); }
-    #result p { margin:10px 0; color:#e0e7f0; line-height:1.65; }
-    .hello { display:inline-block; margin-top:7px!important; color:#ffd782!important; font-weight:800; }
-    .note { margin:22px 0 0; color:#99a9bf; font-size:.75rem; }
-    .confetti { position:fixed; z-index:5; top:-14px; width:9px; height:13px; pointer-events:none; animation:fall 2.6s linear forwards; }
-    @keyframes arrive { from{opacity:0;transform:translateY(16px) scale(.98)} to{opacity:1;transform:none} }
-    @keyframes breathe { 50%{transform:scale(1.12);opacity:.65} }
-    @keyframes wiggle { 0%,100%{transform:translate(-50%,-50%) rotate(-7deg)} 50%{transform:translate(-50%,-50%) rotate(7deg)} }
-    @keyframes ball { to{left:82%;top:27%} }
-    @keyframes fall { to{transform:translateY(110vh) rotate(700deg);opacity:.8} }
-    @media (prefers-reduced-motion: reduce) { *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important} }
+    :root{color-scheme:dark;--cream:#fff6df;--mint:#a8f0ca;--coral:#ff806f;--gold:#ffd782}
+    *{box-sizing:border-box}body{margin:0;min-height:100svh;color:var(--cream);font-family:ui-rounded,"Segoe UI",system-ui,sans-serif;background:radial-gradient(ellipse at 50% 12%,#273957,#17243b 48%,#10172a 90%)}
+    main{width:min(100% - 28px,940px);margin:auto;padding:clamp(20px,5vw,42px) 0 28px;text-align:center}.kicker{margin:0 0 8px;color:var(--mint);font-size:.75rem;font-weight:850;letter-spacing:.2em;text-transform:uppercase}h1{margin:0;font-size:clamp(2rem,7vw,3.7rem);line-height:1;letter-spacing:-.05em}.subtitle{margin:12px 0 20px;color:#cbd6e5}
+    .scoreboard{display:flex;align-items:center;justify-content:center;gap:clamp(20px,8vw,80px);margin:0 auto 16px}.score-side{min-width:100px}.score-side b{display:block;font-size:clamp(2rem,7vw,3.4rem);line-height:1}.score-side span{display:block;margin-top:5px;font-size:.8rem;font-weight:800;letter-spacing:.08em}.score-side.red span{color:var(--coral)}.score-side.blue span{color:#80c7ff}.versus{color:#8fa0b7;font-weight:900}
+    .table-wrap{position:relative;padding:10px;border-radius:23px;background:linear-gradient(135deg,#b87942,#edc07a 20%,#9c5f34);box-shadow:0 18px 44px #0006,inset 0 2px #ffe3a0}.table{display:block;width:100%;height:auto;border-radius:14px;touch-action:none;background:#28765f}.status{min-height:25px;margin:12px 0;color:#d8e3ef;font-size:.9rem}.status strong{color:var(--gold)}
+    .controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin-top:12px}.control-card{padding:13px 16px;border:1px solid #ffffff18;border-radius:16px;background:#ffffff08;color:#d6dfeb;font-size:.86rem}.control-card b{display:block;margin-bottom:4px;color:var(--coral)}.control-card.blue b{color:#80c7ff}.key{display:inline-block;padding:2px 7px;border-radius:6px;background:#ffffff18;color:white;font-weight:800}.actions{display:flex;justify-content:center;gap:10px;margin-top:17px}button{border:0;border-radius:999px;padding:12px 20px;color:#132137;background:var(--mint);font:800 .95rem inherit;font-family:inherit;font-weight:850;cursor:pointer;box-shadow:0 5px 0 #5bb98c;transition:transform .15s}button:hover{transform:translateY(-2px)}button.secondary{color:var(--cream);background:#ffffff12;box-shadow:inset 0 0 0 1px #ffffff25}button:focus-visible{outline:3px solid white;outline-offset:3px}.hint{margin:15px 0 0;color:#93a4bb;font-size:.76rem}
+    .touch-controls{display:none;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}.touch-group{display:flex;justify-content:center;gap:9px}.touch-group button{width:58px;height:48px;padding:0;font-size:1.2rem;touch-action:none}.touch-group.red button{background:#ff806f;box-shadow:0 4px 0 #b95750}.touch-group.blue button{background:#80c7ff;box-shadow:0 4px 0 #478bb8}
+    .lobby{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;margin:20px auto 18px;padding:13px;border:1px solid #ffffff19;border-radius:16px;background:#ffffff08}.lobby input{width:118px;padding:12px;border:1px solid #ffffff2b;border-radius:999px;background:#10172a;color:white;font:700 1rem inherit;text-align:center;text-transform:uppercase}.lobby-note{flex-basis:100%;margin:0;color:#9eafc4;font-size:.77rem}.room-code{color:var(--gold);font-weight:900;letter-spacing:.12em}.online-hidden{display:none!important}
+    body[data-role="host"] .touch-group.blue,body[data-role="guest"] .touch-group.red{display:none}
+    @media(max-width:600px){main{width:min(100% - 20px,940px);padding-top:24px}.controls{gap:8px}.control-card{padding:10px;font-size:.76rem}.touch-controls{display:grid}.hint{font-size:.7rem}.table-wrap{padding:7px;border-radius:16px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
 <body>
-  <div class="glow" aria-hidden="true"></div>
   <main>
-    <p class="kicker">Büyük final yaklaşıyor</p>
-    <h1>Langırtın<br>efsanesi kim?</h1>
-    <p class="subtitle">Cevabı öğrenmek için cesur bir hamle yap.</p>
-    <div class="table" aria-hidden="true">
-      <i class="goal left"></i><i class="goal right"></i>
-      <i class="rod"><b class="player"></b></i><i class="rod"><b class="player p2"></b></i>
-      <i class="rod"><b class="player p3"></b></i><i class="rod"><b class="player p4"></b></i>
-      <i class="ball"></i>
-    </div>
-    <button id="reveal" type="button">Langırt şampiyonunu görmek için tıkla</button>
-    <section id="result" aria-live="polite" hidden>
-      <h2>Tarihin en iyisi: Kadir Beyazıt!</h2>
-      <p>Rivayete göre Kadir Beyazıt, yıllar önce tek bir langırt maçında tam 47 gol atmış; son golü de gözleri kapalı, sadece masanın çıkardığı sesten yönünü bularak kaydetmiş. O günden beri masanın topu her ortaya konduğunda rakipler “Şampiyon geldi!” diye ayağa kalkarmış.</p>
-      <p class="hello">Sümeyra’ya kocaman selam! 👋</p>
-      <p class="note">Bu hikâye şaka olsun diye uydurulmuştur; ama selam gerçek. 😄</p>
-    </section>
+    <p class="kicker">Arkadaşına meydan oku</p>
+    <h1>Langırt Düellosu</h1>
+    <p class="subtitle">İlk 5 gole ulaşan kazanır. Hazırsanız topu ortaya bırakın!</p>
+    <section class="lobby" aria-label="Çevrimiçi oyun"><button id="create-room">Oda kur</button><input id="room-input" maxlength="6" placeholder="ODA KODU" aria-label="Arkadaşının oda kodu"><button id="join-room" class="secondary">Odaya katıl</button><button id="local-play" class="secondary">Aynı cihazda oyna</button><p class="lobby-note" id="room-status" aria-live="polite">Çevrimiçi oynamak için biriniz oda kursun, diğeri kodla katılsın.</p></section>
+    <div class="scoreboard" aria-live="polite"><div class="score-side red"><b id="score1">0</b><span>KIRMIZI · OYUNCU 1</span></div><div class="versus">VS</div><div class="score-side blue"><b id="score2">0</b><span>MAVİ · OYUNCU 2</span></div></div>
+    <div class="table-wrap"><canvas class="table" id="game" aria-label="İki kişilik langırt oyun alanı"></canvas></div>
+    <p class="status" id="status" aria-live="polite">Maç başladı! <strong>Hücum et!</strong></p>
+    <div class="controls"><div class="control-card"><b>🔴 OYUNCU 1</b><span class="key">W</span> <span class="key">S</span> çubukları hareket ettir · <span class="key">A</span> / <span class="key">D</span> şut çek</div><div class="control-card blue"><b>🔵 OYUNCU 2</b><span class="key">↑</span> <span class="key">↓</span> çubukları hareket ettir · <span class="key">←</span> / <span class="key">→</span> şut çek</div></div>
+    <div class="touch-controls" aria-label="Dokunmatik kontroller"><div class="touch-group red"><button aria-label="Oyuncu 1 yukarı" data-key="w">▲</button><button aria-label="Oyuncu 1 aşağı" data-key="s">▼</button><button aria-label="Oyuncu 1 şut" data-key="d">⚽</button></div><div class="touch-group blue"><button aria-label="Oyuncu 2 yukarı" data-key="ArrowUp">▲</button><button aria-label="Oyuncu 2 aşağı" data-key="ArrowDown">▼</button><button aria-label="Oyuncu 2 şut" data-key="ArrowLeft">⚽</button></div></div>
+    <div class="actions"><button id="restart">Maçı yeniden başlat</button><button id="sound" class="secondary" aria-pressed="false">🔊 Ses açık</button></div>
+    <p class="hint">Bilgisayarda WASD + A/D, tablette ekrandaki düğmeler. Oda kodunu arkadaşınla paylaş!</p>
   </main>
   <script>
-    const button = document.querySelector('#reveal');
-    const result = document.querySelector('#result');
-    const prompts = [
-      'Emin misin?',
-      'Gerçekten emin misin?',
-      'Evet, şampiyonu göster!'
-    ];
-    let step = 0;
-    button.addEventListener('click', () => {
-      if (step < prompts.length) {
-        button.textContent = prompts[step++];
-        button.animate([{ transform:'scale(1)' },{ transform:'scale(1.06)' },{ transform:'scale(1)' }], { duration:320, easing:'ease-out' });
-        return;
+  (()=>{
+    const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),status=document.querySelector('#status'),scoreEls=[document.querySelector('#score1'),document.querySelector('#score2')];
+    const keys=new Set(), W=900,H=500, winScore=5; let scores=[0,0], running=true, muted=false, audio, goalPause=0, mode='local',socket=null,roomCode='',lastSync=0;
+    const rods=[{x:.09,y:.5,n:3,team:0},{x:.27,y:.5,n:2,team:0},{x:.43,y:.5,n:3,team:0},{x:.57,y:.5,n:3,team:1},{x:.73,y:.5,n:2,team:1},{x:.91,y:.5,n:3,team:1}];
+    const ball={x:.5,y:.5,vx:.18,vy:.08,r:9}, hitLocks=Array(6).fill(0);
+    function fit(){const box=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);canvas.width=box.width*dpr;canvas.height=box.width*(H/W)*dpr;ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0)}
+    function resetBall(dir= Math.random()<.5?-1:1){ball.x=.5;ball.y=.5;ball.vx=dir*.18;ball.vy=(Math.random()-.5)*.12;hitLocks.fill(0)}
+    function beep(freq=440,duration=.09){if(muted)return;try{audio??=new AudioContext();const o=audio.createOscillator(),g=audio.createGain();o.frequency.value=freq;g.gain.setValueAtTime(.08,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch{}}
+    function send(obj){if(socket?.readyState===WebSocket.OPEN)socket.send(JSON.stringify(obj))}
+    function connectRoom(action,code=''){const wsUrl=(location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws';roomStatus('Sunucuya bağlanıyor…');socket=new WebSocket(wsUrl);socket.addEventListener('open',()=>send({type:action,code}));socket.addEventListener('message',e=>{const m=JSON.parse(e.data);if(m.type==='created'){mode='online-host';document.body.dataset.role='host';roomCode=m.code;roomStatus(`Oda hazır! Arkadaşın bu kodu girsin: <span class="room-code">${roomCode}</span>`)}else if(m.type==='joined'){mode='online-guest';document.body.dataset.role='guest';roomCode=m.code;roomStatus(`Odaya katıldın: <span class="room-code">${roomCode}</span>`)}else if(m.type==='ready'){roomStatus('Arkadaşın bağlandı! Maç başladı 🎮');running=true}else if(m.type==='state'){scores=m.scores;scoreEls.forEach((el,i)=>el.textContent=scores[i]);rods.forEach((r,i)=>r.y=m.rods[i]);Object.assign(ball,m.ball);running=m.running;draw();if(m.status)status.innerHTML=m.status}else if(m.type==='input'&&mode==='online-host'){if(m.down){const fresh=!keys.has(m.key);keys.add(m.key);if(fresh&&['a','d','ArrowLeft','ArrowRight'].includes(m.key)&&goalPause===0){const dir=['a','ArrowLeft'].includes(m.key)?-1:1;ball.vx=Math.max(-.42,Math.min(.42,ball.vx+dir*.14));beep(390,.05)}}else keys.delete(m.key)}else if(m.type==='error'){roomStatus(m.message);socket.close()}});socket.addEventListener('close',()=>{if(mode!=='local')roomStatus('Bağlantı kesildi. Yeniden oda kurabilir veya katılabilirsin.')});socket.addEventListener('error',()=>roomStatus('Sunucuya ulaşılamadı. Site çevrimiçi sunucuya aktarılmalı.'))}
+    function roomStatus(html){document.querySelector('#room-status').innerHTML=html}
+    function goal(team){scores[team]++;scoreEls[team].textContent=scores[team];beep(team===0?660:520,.22);if(scores[team]>=winScore){running=false;status.innerHTML=`<strong>${team===0?'Kırmızı':'Mavi'} kazandı! Şampiyon belli oldu! 🏆</strong>`}else{status.innerHTML=`<strong>GOL! ${team===0?'Kırmızı':'Mavi'} takım öne geçti!</strong>`;goalPause=.9;setTimeout(()=>{if(running)status.innerHTML='Maç devam ediyor. <strong>Hücum et!</strong>'},1200)}resetBall(team===0?1:-1)}
+    function draw(){ctx.clearRect(0,0,W,H);ctx.fillStyle='#28765f';ctx.fillRect(0,0,W,H);ctx.fillStyle='#2e8068';for(let x=0;x<W;x+=100)ctx.fillRect(x,0,50,H);ctx.strokeStyle='#ffffff75';ctx.lineWidth=3;ctx.strokeRect(17,17,W-34,H-34);ctx.beginPath();ctx.moveTo(W/2,17);ctx.lineTo(W/2,H-17);ctx.stroke();ctx.beginPath();ctx.arc(W/2,H/2,73,0,Math.PI*2);ctx.stroke();ctx.strokeRect(17,H*.34,68,H*.32);ctx.strokeRect(W-85,H*.34,68,H*.32);ctx.fillStyle='#182b39';ctx.fillRect(-2,H*.39,22,H*.22);ctx.fillRect(W-20,H*.39,22,H*.22);
+      rods.forEach(r=>{const px=r.x*W, py=r.y*H;ctx.fillStyle='#d9b36f';ctx.fillRect(px-5,20,10,H-40);for(let i=0;i<r.n;i++){const y=py+(i-(r.n-1)/2)*112;ctx.save();ctx.translate(px,y);ctx.fillStyle=r.team?'#80c7ff':'#ff806f';ctx.fillRect(-15,-20,30,42);ctx.beginPath();ctx.arc(0,-23,13,0,Math.PI*2);ctx.fillStyle='#ffe3a0';ctx.fill();ctx.restore()}});
+      ctx.beginPath();ctx.arc(ball.x*W,ball.y*H,ball.r,0,Math.PI*2);ctx.fillStyle='#fff6df';ctx.shadowColor='#fff';ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0}
+    function update(dt){const now=performance.now()/1000;if(running&&mode!=='online-guest'){const speed=.75;const up=keys.has('w'),down=keys.has('s'),up2=keys.has('ArrowUp'),down2=keys.has('ArrowDown');rods.forEach(r=>{const a=r.team===0?(up?-1:0)+(down?1:0):(up2?-1:0)+(down2?1:0);r.y=Math.max(.25,Math.min(.75,r.y+a*speed*dt))});
+      if(goalPause>0){goalPause=Math.max(0,goalPause-dt)}else{
+      hitLocks.forEach((v,i)=>hitLocks[i]=Math.max(0,v-dt));
+      ball.x+=ball.vx*dt;ball.y+=ball.vy*dt;ball.vx*=Math.pow(.999,dt*60);ball.vy*=Math.pow(.999,dt*60);if(ball.y<.045||ball.y>.955){ball.y=Math.max(.045,Math.min(.955,ball.y));ball.vy*=-.78;beep(240,.035)}
+      rods.forEach((r,index)=>{const dx=ball.x-r.x;if(hitLocks[index]===0&&Math.abs(dx)<.027&&Math.sign(ball.vx)===-Math.sign(dx)){for(let i=0;i<r.n;i++){const py=r.y+(i-(r.n-1)/2)*.224;if(Math.abs(ball.y-py)<.075){ball.vx=(r.team===0?1:-1)*Math.min(.46,Math.abs(ball.vx)+.12);ball.vy=Math.max(-.3,Math.min(.3,ball.vy+(ball.y-py)*.55));ball.x=r.x+(r.team===0?.03:-.03);hitLocks[index]=.18;beep(330,.04);break}}}});
+      if(ball.x<-.015)goal(1);if(ball.x>1.015)goal(0);if(ball.x<-.03||ball.x>1.03)resetBall()}
       }
-      button.hidden = true;
-      result.hidden = false;
-      for (let i = 0; i < 48; i++) {
-        const bit = document.createElement('i');
-        bit.className = 'confetti';
-        bit.style.left = Math.random() * 100 + 'vw';
-        bit.style.background = ['#a8f0ca','#ff806f','#ffd782','#80c7ff','#e86fa7'][i % 5];
-        bit.style.animationDelay = Math.random() * .9 + 's';
-        document.body.append(bit);
-        setTimeout(() => bit.remove(), 3600);
-      }
-    });
+      if(mode==='online-host'&&now-lastSync>.04){send({type:'state',scores,rods:rods.map(r=>r.y),ball:{x:ball.x,y:ball.y,vx:ball.vx,vy:ball.vy},running,status:status.innerHTML});lastSync=now}
+      draw();requestAnimationFrame(t=>{const now=t/1000;const delta=Math.min(.04,now-(update.last||now));update.last=now;update(delta)})}
+    addEventListener('keydown',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(k))e.preventDefault();if(mode==='online-guest'){send({type:'input',key:k,down:true});return}const wasDown=keys.has(k);keys.add(k);if(!wasDown&&running&&goalPause===0&&['a','d','ArrowLeft','ArrowRight'].includes(k)){const dir=['a','ArrowLeft'].includes(k)?-1:1;ball.vx=Math.max(-.42,Math.min(.42,ball.vx+dir*.14));ball.vy=Math.max(-.3,Math.min(.3,ball.vy+(Math.random()-.5)*.08));beep(390,.05)}if(k===' '&&!running){scores=[0,0];scoreEls.forEach(x=>x.textContent='0');running=true;goalPause=0;resetBall();status.innerHTML='Maç başladı! <strong>Hücum et!</strong>'}});addEventListener('keyup',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;if(mode==='online-guest'){send({type:'input',key:k,down:false});return}keys.delete(k)});
+    document.querySelectorAll('[data-key]').forEach(b=>{const k=b.dataset.key;const on=e=>{e.preventDefault();if(mode==='online-guest'){send({type:'input',key:k,down:true});return}keys.add(k);if(['d','ArrowLeft'].includes(k)&&running&&goalPause===0){const dir=k==='d'?1:-1;ball.vx=Math.max(-.42,Math.min(.42,ball.vx+dir*.14));ball.vy=Math.max(-.3,Math.min(.3,ball.vy+(Math.random()-.5)*.08));beep(390,.05)}};const off=e=>{e.preventDefault();if(mode==='online-guest'){send({type:'input',key:k,down:false});return}keys.delete(k)};b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)});
+    document.querySelector('#create-room').addEventListener('click',()=>{socket?.close();mode='connecting';document.body.dataset.role='';connectRoom('create')});document.querySelector('#join-room').addEventListener('click',()=>{const code=document.querySelector('#room-input').value.trim().toUpperCase();if(code.length!==6){roomStatus('Oda kodu 6 karakter olmalı.');return}socket?.close();mode='connecting';document.body.dataset.role='';connectRoom('join',code)});document.querySelector('#local-play').addEventListener('click',()=>{socket?.close();mode='local';document.body.dataset.role='';roomCode='';keys.clear();roomStatus('Aynı cihazda oyun modu açık.');status.innerHTML='Maç başladı! <strong>Hücum et!</strong>'});
+    document.querySelector('#restart').addEventListener('click',()=>{scores=[0,0];scoreEls.forEach(x=>x.textContent='0');running=true;goalPause=0;resetBall();status.innerHTML='Maç başladı! <strong>Hücum et!</strong>';beep(500)});document.querySelector('#sound').addEventListener('click',e=>{muted=!muted;e.currentTarget.textContent=muted?'🔇 Ses kapalı':'🔊 Ses açık';e.currentTarget.setAttribute('aria-pressed',String(muted))});addEventListener('resize',fit);fit();update.last=performance.now()/1000;draw();requestAnimationFrame(t=>{const now=t/1000;update(Math.min(.04,Math.max(0,now-update.last)));update.last=now})
+  })();
   </script>
 </body>
 </html>

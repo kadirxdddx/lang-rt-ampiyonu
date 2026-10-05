@@ -1,6 +1,7 @@
 services:
-  - type: static
+  - type: web
     name: langirt-sampiyonu
-    buildCommand: ""
-    staticPublishPath: .
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
     plan: free
