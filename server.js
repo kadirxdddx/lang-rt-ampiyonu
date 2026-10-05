@@ -87,6 +87,8 @@ wss.on('connection', ws => {
     } else if (message.type === 'input' && ws.role === 'guest' && ws.room) {
       const allowed = ['w', 's', 'ArrowUp', 'ArrowDown', 'a', 'd', 'ArrowLeft', 'ArrowRight'];
       if (allowed.includes(message.key)) send(ws.room.host, { type: 'input', key: message.key, down: Boolean(message.down) });
+    } else if (message.type === 'moveRod' && ws.role === 'guest' && ws.room && Number.isFinite(message.y)) {
+      send(ws.room.host, { type: 'moveRod', y: Math.max(0.25, Math.min(0.75, message.y)) });
     } else if (message.type === 'chat' && ws.room && ws.room.guest) {
       const text = typeof message.text === 'string' ? message.text.trim().slice(0, 200) : '';
       if (text) {
