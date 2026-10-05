@@ -31,6 +31,11 @@ function makeCode() {
 function send(peer, message) {
   if (peer && peer.readyState === WebSocket.OPEN) peer.send(JSON.stringify(message));
 }
+function sendReadiness(room) {
+  const status = { type: 'readyStatus', ready: room.ready.slice(), players: room.guest ? 2 : 1 };
+  send(room.host, status);
+  send(room.guest, status);
+}
 function leave(ws) {
   const room = ws.room;
   if (!room) return;
@@ -39,7 +44,10 @@ function leave(ws) {
     rooms.delete(room.code);
   } else if (room.guest === ws) {
     room.guest = null;
-    send(room.host, { type: 'error', message: 'Arkadaşının bağlantısı kesildi.' });
+    room.ready = [false, false];
+    room.started = false;
+    send(room.host, { type: 'playerLeft' });
+    sendReadiness(room);
   }
   ws.room = null;
 }
@@ -49,7 +57,7 @@ wss.on('connection', ws => {
     try { message = JSON.parse(raw.toString()); } catch { return; }
     if (message.type === 'create') {
       const code = makeCode();
-      const room = { code, host: ws, guest: null };
+      const room = { code, host: ws, guest: null, ready: [false, false], started: false };
       rooms.set(code, room);
       ws.room = room;
       ws.role = 'host';
@@ -63,13 +71,29 @@ wss.on('connection', ws => {
       ws.room = room;
       ws.role = 'guest';
       send(ws, { type: 'joined', code });
-      send(room.host, { type: 'ready' });
-      send(ws, { type: 'ready' });
+      sendReadiness(room);
+    } else if (message.type === 'ready' && ws.room) {
+      const room = ws.room;
+      if (room.started || (ws.role === 'guest' && !room.guest)) return;
+      room.ready[ws.role === 'host' ? 0 : 1] = true;
+      sendReadiness(room);
+      if (room.guest && room.ready.every(Boolean) && !room.started) {
+        room.started = true;
+        send(room.host, { type: 'start' });
+        send(room.guest, { type: 'start' });
+      }
     } else if (message.type === 'state' && ws.role === 'host' && ws.room) {
       send(ws.room.guest, message);
     } else if (message.type === 'input' && ws.role === 'guest' && ws.room) {
       const allowed = ['w', 's', 'ArrowUp', 'ArrowDown', 'a', 'd', 'ArrowLeft', 'ArrowRight'];
       if (allowed.includes(message.key)) send(ws.room.host, { type: 'input', key: message.key, down: Boolean(message.down) });
+    } else if (message.type === 'chat' && ws.room && ws.room.guest) {
+      const text = typeof message.text === 'string' ? message.text.trim().slice(0, 200) : '';
+      if (text) {
+        const chat = { type: 'chat', from: ws.role, text };
+        send(ws.room.host, chat);
+        send(ws.room.guest, chat);
+      }
     }
   });
   ws.on('close', () => leave(ws));
