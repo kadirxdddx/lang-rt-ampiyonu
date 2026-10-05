@@ -1,0 +1,6 @@
+services:
+  - type: static
+    name: langirt-sampiyonu
+    buildCommand: ""
+    staticPublishPath: .
+    plan: free

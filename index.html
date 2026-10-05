@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10172a">
+  <title>Langırt Şampiyonu</title>
+  <style>
+    :root { color-scheme: dark; --cream:#fff6df; --mint:#a8f0ca; --coral:#ff806f; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100svh; display:grid; place-items:center; overflow:hidden; color:var(--cream); font-family: ui-rounded, "Segoe UI", system-ui, sans-serif; background:radial-gradient(ellipse at 50% 42%,#273957 0,#17243b 35%,#10172a 76%); }
+    .glow { position:fixed; width:38rem; height:38rem; border-radius:50%; background:#72e7b012; filter:blur(10px); animation:breathe 5s ease-in-out infinite; pointer-events:none; }
+    main { position:relative; width:min(90vw,620px); text-align:center; padding:clamp(28px,7vw,62px) clamp(22px,7vw,60px); border:1px solid #ffffff1b; border-radius:30px; background:linear-gradient(145deg,#ffffff0d,#ffffff04); box-shadow:0 28px 90px #0005,inset 0 1px #ffffff17; backdrop-filter:blur(10px); animation:arrive .8s cubic-bezier(.2,.8,.2,1) both; }
+    .kicker { margin:0 0 13px; color:var(--mint); letter-spacing:.2em; font-size:.72rem; font-weight:800; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(2.35rem,8vw,4.5rem); line-height:1; letter-spacing:-.055em; }
+    .subtitle { margin:18px 0 30px; color:#d6dfeb; font-size:clamp(1rem,3vw,1.13rem); }
+    .table { position:relative; width:min(100%,360px); aspect-ratio:1.75; margin:0 auto 32px; overflow:hidden; border:9px solid #d49457; border-radius:18px; background:repeating-linear-gradient(90deg,#317e69 0 50%,#378a71 50% 100%); box-shadow:inset 0 0 0 2px #f3c27a,0 11px 25px #0004; }
+    .table:before { content:""; position:absolute; inset:0 50%; border-left:2px solid #ffffff70; }
+    .table:after { content:""; position:absolute; width:24%; aspect-ratio:1; border:2px solid #ffffff70; border-radius:50%; left:38%; top:50%; transform:translateY(-50%); }
+    .goal { position:absolute; z-index:1; top:32%; height:36%; width:9%; border:2px solid #ffffff9c; }
+    .goal.left { left:-2px; border-left:0; }.goal.right { right:-2px; border-right:0; }
+    .rod { position:absolute; z-index:2; top:0; bottom:0; width:5px; background:#e4bd79; box-shadow:0 0 0 1px #372c2780; }
+    .rod:nth-of-type(1){left:25%}.rod:nth-of-type(2){left:42%}.rod:nth-of-type(3){left:58%}.rod:nth-of-type(4){left:75%}
+    .player { position:absolute; top:50%; left:50%; width:19px; height:40px; border-radius:9px 9px 5px 5px; background:var(--coral); border:2px solid #fff3cf; transform:translate(-50%,-50%); box-shadow:0 3px 0 #8b3f47; animation:wiggle 2.8s ease-in-out infinite; }
+    .player:after { content:""; position:absolute; width:12px; height:12px; top:-9px; left:1px; border-radius:50%; background:#ffe3a0; border:1px solid #fff3cf; }
+    .p2 { background:#f4d35e; animation-delay:-.8s }.p3 { background:#e86fa7; animation-delay:-1.4s }.p4 { background:#80c7ff; animation-delay:-2s }
+    .ball { position:absolute; z-index:3; left:48%; top:48%; width:13px; height:13px; border-radius:50%; background:#fff7e5; box-shadow:0 0 15px #fff9; animation:ball 3s ease-in-out infinite alternate; }
+    button { appearance:none; border:0; border-radius:999px; padding:17px 28px; min-height:58px; max-width:100%; color:#132137; background:var(--mint); font:800 1rem/1.2 inherit; font-family:inherit; font-size:1rem; font-weight:850; cursor:pointer; box-shadow:0 7px 0 #5bb98c,0 12px 24px #0003; transition:transform .18s,box-shadow .18s,background .18s; }
+    button:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 10px 0 #5bb98c,0 16px 28px #0004; }
+    button:active { transform:translateY(4px); box-shadow:0 3px 0 #5bb98c; }
+    button:focus-visible { outline:3px solid white; outline-offset:5px; }
+    #result { margin-top:27px; animation:arrive .5s ease both; }
+    #result[hidden] { display:none; }
+    #result h2 { margin:0 0 12px; color:var(--mint); font-size:clamp(1.45rem,5vw,2rem); }
+    #result p { margin:10px 0; color:#e0e7f0; line-height:1.65; }
+    .hello { display:inline-block; margin-top:7px!important; color:#ffd782!important; font-weight:800; }
+    .note { margin:22px 0 0; color:#99a9bf; font-size:.75rem; }
+    .confetti { position:fixed; z-index:5; top:-14px; width:9px; height:13px; pointer-events:none; animation:fall 2.6s linear forwards; }
+    @keyframes arrive { from{opacity:0;transform:translateY(16px) scale(.98)} to{opacity:1;transform:none} }
+    @keyframes breathe { 50%{transform:scale(1.12);opacity:.65} }
+    @keyframes wiggle { 0%,100%{transform:translate(-50%,-50%) rotate(-7deg)} 50%{transform:translate(-50%,-50%) rotate(7deg)} }
+    @keyframes ball { to{left:82%;top:27%} }
+    @keyframes fall { to{transform:translateY(110vh) rotate(700deg);opacity:.8} }
+    @media (prefers-reduced-motion: reduce) { *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important} }
+  </style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <main>
+    <p class="kicker">Büyük final yaklaşıyor</p>
+    <h1>Langırtın<br>efsanesi kim?</h1>
+    <p class="subtitle">Cevabı öğrenmek için cesur bir hamle yap.</p>
+    <div class="table" aria-hidden="true">
+      <i class="goal left"></i><i class="goal right"></i>
+      <i class="rod"><b class="player"></b></i><i class="rod"><b class="player p2"></b></i>
+      <i class="rod"><b class="player p3"></b></i><i class="rod"><b class="player p4"></b></i>
+      <i class="ball"></i>
+    </div>
+    <button id="reveal" type="button">Langırt şampiyonunu görmek için tıkla</button>
+    <section id="result" aria-live="polite" hidden>
+      <h2>Tarihin en iyisi: Kadir Beyazıt!</h2>
+      <p>Rivayete göre Kadir Beyazıt, yıllar önce tek bir langırt maçında tam 47 gol atmış; son golü de gözleri kapalı, sadece masanın çıkardığı sesten yönünü bularak kaydetmiş. O günden beri masanın topu her ortaya konduğunda rakipler “Şampiyon geldi!” diye ayağa kalkarmış.</p>
+      <p class="hello">Sümeyra’ya kocaman selam! 👋</p>
+      <p class="note">Bu hikâye şaka olsun diye uydurulmuştur; ama selam gerçek. 😄</p>
+    </section>
+  </main>
+  <script>
+    const button = document.querySelector('#reveal');
+    const result = document.querySelector('#result');
+    const prompts = [
+      'Emin misin?',
+      'Gerçekten emin misin?',
+      'Evet, şampiyonu göster!'
+    ];
+    let step = 0;
+    button.addEventListener('click', () => {
+      if (step < prompts.length) {
+        button.textContent = prompts[step++];
+        button.animate([{ transform:'scale(1)' },{ transform:'scale(1.06)' },{ transform:'scale(1)' }], { duration:320, easing:'ease-out' });
+        return;
+      }
+      button.hidden = true;
+      result.hidden = false;
+      for (let i = 0; i < 48; i++) {
+        const bit = document.createElement('i');
+        bit.className = 'confetti';
+        bit.style.left = Math.random() * 100 + 'vw';
+        bit.style.background = ['#a8f0ca','#ff806f','#ffd782','#80c7ff','#e86fa7'][i % 5];
+        bit.style.animationDelay = Math.random() * .9 + 's';
+        document.body.append(bit);
+        setTimeout(() => bit.remove(), 3600);
+      }
+    });
+  </script>
+</body>
+</html>
