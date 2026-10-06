@@ -1,121 +1,55 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10172a">
-  <title>Langırt Düellosu — Arkadaşına meydan oku</title>
-  <style>
-    :root{color-scheme:dark;--cream:#fff6df;--mint:#a8f0ca;--coral:#ff806f;--gold:#ffd782}
-    *{box-sizing:border-box}body{margin:0;min-height:100svh;color:var(--cream);font-family:ui-rounded,"Segoe UI",system-ui,sans-serif;background:radial-gradient(ellipse at 50% 12%,#273957,#17243b 48%,#10172a 90%)}
-    main{width:min(100% - 28px,940px);margin:auto;padding:clamp(20px,5vw,42px) 0 28px;text-align:center}.kicker{margin:0 0 8px;color:var(--mint);font-size:.75rem;font-weight:850;letter-spacing:.2em;text-transform:uppercase}h1{margin:0;font-size:clamp(2rem,7vw,3.7rem);line-height:1;letter-spacing:-.05em}.subtitle{margin:12px 0 20px;color:#cbd6e5}
-    .scoreboard{display:flex;align-items:center;justify-content:center;gap:clamp(20px,8vw,80px);margin:0 auto 16px}.score-side{min-width:100px}.score-side b{display:block;font-size:clamp(2rem,7vw,3.4rem);line-height:1}.score-side span{display:block;margin-top:5px;font-size:.8rem;font-weight:800;letter-spacing:.08em}.score-side.red span{color:var(--coral)}.score-side.blue span{color:#80c7ff}.versus{color:#8fa0b7;font-weight:900}
-    .table-wrap{position:relative;padding:10px;border-radius:23px;background:linear-gradient(135deg,#b87942,#edc07a 20%,#9c5f34);box-shadow:0 18px 44px #0006,inset 0 2px #ffe3a0}.table{display:block;width:100%;height:auto;border-radius:14px;touch-action:none;background:#28765f}.status{min-height:25px;margin:12px 0;color:#d8e3ef;font-size:.9rem}.status strong{color:var(--gold)}
-    .controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin-top:12px}.control-card{padding:13px 16px;border:1px solid #ffffff18;border-radius:16px;background:#ffffff08;color:#d6dfeb;font-size:.86rem}.control-card b{display:block;margin-bottom:4px;color:var(--coral)}.control-card.blue b{color:#80c7ff}.key{display:inline-block;padding:2px 7px;border-radius:6px;background:#ffffff18;color:white;font-weight:800}.actions{display:flex;justify-content:center;gap:10px;margin-top:17px}button{border:0;border-radius:999px;padding:12px 20px;color:#132137;background:var(--mint);font:800 .95rem inherit;font-family:inherit;font-weight:850;cursor:pointer;box-shadow:0 5px 0 #5bb98c;transition:transform .15s}button:hover{transform:translateY(-2px)}button.secondary{color:var(--cream);background:#ffffff12;box-shadow:inset 0 0 0 1px #ffffff25}button:focus-visible{outline:3px solid white;outline-offset:3px}.hint{margin:15px 0 0;color:#93a4bb;font-size:.76rem}
-    .touch-controls{display:none;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}.touch-group{display:flex;justify-content:center;gap:9px}.touch-group button{width:58px;height:48px;padding:0;font-size:1.2rem;touch-action:none}.touch-group.red button{background:#ff806f;box-shadow:0 4px 0 #b95750}.touch-group.blue button{background:#80c7ff;box-shadow:0 4px 0 #478bb8}
-    .lobby{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;margin:20px auto 18px;padding:13px;border:1px solid #ffffff19;border-radius:16px;background:#ffffff08}.lobby input{width:118px;padding:12px;border:1px solid #ffffff2b;border-radius:999px;background:#10172a;color:white;font:700 1rem inherit;text-align:center;text-transform:uppercase}.lobby-note{flex-basis:100%;margin:0;color:#9eafc4;font-size:.77rem}.room-code{color:var(--gold);font-weight:900;letter-spacing:.12em}.online-hidden{display:none!important}
-    body[data-role="host"] .touch-group.blue,body[data-role="guest"] .touch-group.red{display:none}
-    body[data-role="host"] #restart,body[data-role="guest"] #restart{display:none}
-    .chat-widget{position:absolute;right:20px;bottom:20px;z-index:5;text-align:left}.chat-toggle{padding:10px 15px;background:#14263b;color:#fff6df;box-shadow:0 4px 0 #091521,inset 0 0 0 1px #ffffff40}.chat-panel{display:flex;flex-direction:column;gap:8px;width:min(280px,calc(100vw - 84px));height:270px;margin-bottom:10px;padding:10px;border:1px solid #ffffff35;border-radius:15px;background:#101a2bf2;box-shadow:0 12px 34px #0009}.chat-panel[hidden]{display:none}.chat-heading{display:flex;align-items:center;justify-content:space-between;font-size:.82rem;font-weight:850}.chat-heading button{padding:5px 9px;min-height:0}.chat-messages{display:flex;flex:1;flex-direction:column;gap:6px;overflow:auto;text-align:left}.chat-message{align-self:flex-start;max-width:90%;padding:6px 9px;border-radius:10px;background:#ffffff16;color:#f3f5fa;font-size:.78rem;overflow-wrap:anywhere}.chat-message.mine{align-self:flex-end;background:#28664f}.chat-form{display:flex;gap:6px}.chat-form input{min-width:0;flex:1;padding:9px;border:1px solid #ffffff30;border-radius:9px;background:#0c1421;color:white;font:inherit;font-size:.8rem}.chat-form button{padding:8px 11px;border-radius:9px;font-size:.78rem}
-    @media(max-width:600px){main{width:min(100% - 20px,940px);padding-top:24px}.controls{gap:8px}.control-card{padding:10px;font-size:.76rem}.touch-controls{display:grid}.hint{font-size:.7rem}.table-wrap{padding:7px;border-radius:16px}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#151b1a">
+  <meta name="description" content="Arkadaşınla aynı masada buluş. Oda koduyla oynanan üç boyutlu online langırt.">
+  <title>Masa Club — Online 3D Langırt</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2383d7b8'/%3E%3Cpath d='M16 16v32m16-32v32m16-32v32' stroke='%23151b1a' stroke-width='4'/%3E%3Ccircle cx='16' cy='27' r='7' fill='%23151b1a'/%3E%3Ccircle cx='32' cy='40' r='7' fill='%23151b1a'/%3E%3Ccircle cx='48' cy='24' r='7' fill='%23151b1a'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="importmap">{"imports":{"three":"/vendor/three.module.js"}}</script>
 </head>
 <body>
-  <main>
-    <p class="kicker">Arkadaşına meydan oku</p>
-    <h1>Langırt Düellosu</h1>
-    <p class="subtitle">İlk 5 gole ulaşan kazanır. Hazırsanız topu ortaya bırakın!</p>
-    <section class="lobby" aria-label="Çevrimiçi oyun"><button id="create-room">Oda kur</button><input id="room-input" maxlength="6" placeholder="ODA KODU" aria-label="Arkadaşının oda kodu"><button id="join-room" class="secondary">Odaya katıl</button><button id="online-ready" type="button" hidden>Hazırım!</button><button id="local-play" class="secondary">Aynı cihazda oyna</button><p class="lobby-note" id="room-status" aria-live="polite">Çevrimiçi oynamak için biriniz oda kursun, diğeri kodla katılsın.</p></section>
-    <div class="scoreboard" aria-live="polite"><div class="score-side red"><b id="score1">0</b><span>KIRMIZI · OYUNCU 1</span></div><div class="versus">VS</div><div class="score-side blue"><b id="score2">0</b><span>MAVİ · OYUNCU 2</span></div></div>
-    <div class="table-wrap"><canvas class="table" id="game" aria-label="İki kişilik langırt oyun alanı"></canvas><aside class="chat-widget" aria-label="Maç sohbeti"><div id="chat-panel" class="chat-panel" hidden><div class="chat-heading"><span>💬 Maç sohbeti</span><button type="button" id="chat-close" class="secondary" aria-label="Sohbeti kapat">×</button></div><div id="chat-messages" class="chat-messages" aria-live="polite"></div><form id="chat-form" class="chat-form"><input id="chat-input" maxlength="200" placeholder="Mesaj yaz…" aria-label="Mesajın"><button type="submit">Gönder</button></form></div><button type="button" id="chat-toggle" class="chat-toggle">💬 Sohbet</button></aside></div>
-    <p class="status" id="status" aria-live="polite">Maç başladı! <strong>Hücum et!</strong></p>
-    <div class="controls"><div class="control-card"><b>🔴 OYUNCU 1</b>Kaleci <span class="key">Q/A</span> · Orta <span class="key">W/S</span> · Hücum <span class="key">E/D</span> · Şut <span class="key">F</span></div><div class="control-card blue"><b>🔵 OYUNCU 2</b>Hücum <span class="key">U/J</span> · Orta <span class="key">I/K</span> · Kaleci <span class="key">O/L</span> · Şut <span class="key">H</span></div></div>
-    <div class="touch-controls" aria-label="Dokunmatik kontroller"><div class="touch-group red"><button aria-label="Oyuncu 1 orta çubuk yukarı" data-key="w">▲</button><button aria-label="Oyuncu 1 orta çubuk aşağı" data-key="s">▼</button><button aria-label="Oyuncu 1 şut" data-key="f">⚽</button></div><div class="touch-group blue"><button aria-label="Oyuncu 2 orta çubuk yukarı" data-key="ArrowUp">▲</button><button aria-label="Oyuncu 2 orta çubuk aşağı" data-key="ArrowDown">▼</button><button aria-label="Oyuncu 2 şut" data-key="ArrowLeft">⚽</button></div></div>
-    <div class="actions"><button id="restart">Maçı yeniden başlat</button><button id="sound" class="secondary" aria-pressed="false">🔊 Ses açık</button></div>
-    <p class="hint">İlk tuş yukarı, ikinci aşağı hareket ettirir. Tablette istediğin çubuğun hizasından sürükle; şut tuşuna bas. Oda kodunu paylaş!</p>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Masa Club ana sayfa"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>masa<span class="brand-light">club</span><span class="brand-dot">.</span></span></a>
+    <div class="header-middle"><span class="live-dot"></span> OYUN SALONU <span class="header-divider">/</span> LANGIRT 3D</div>
+    <button id="help-button" class="quiet-button">Nasıl oynanır <span aria-hidden="true">↗</span></button>
+  </header>
+  <main class="shell">
+    <section class="intro"><div><div class="eyebrow">ARKADAŞLIK KAZANSIN. AMA ÖNCE SEN.</div><h1>Bir masa. <em>İki rakip.</em></h1></div><p>Odanı kur, arkadaşını çağır.<br>Gerisi bileğine kalmış.</p></section>
+    <div class="game-layout">
+      <section class="play-column" aria-label="Langırt masası">
+        <div class="arena" id="arena">
+          <div class="arena-top"><span class="table-label"><span class="live-dot"></span> MASA 01</span><div class="view-tools"><button id="view-button" class="icon-button" title="Kamera açısını değiştir" aria-label="Üstten kamera görünümü">▱</button><button id="sound-button" class="icon-button" title="Sesi aç / kapat" aria-label="Sesi kapat">♪</button><button id="fullscreen-button" class="icon-button" title="Tam ekran" aria-label="Tam ekran">⛶</button></div></div>
+          <div class="scoreboard" aria-label="Skor"><div class="score-team orange"><span class="team-dot"></span><span id="team0-name">SEN</span></div><strong id="score0">0</strong><div class="score-mid"><span id="match-time">03:00</span><small>7 GOL</small></div><strong id="score1">0</strong><div class="score-team mint"><span id="team1-name">ANTRENMAN</span><span class="team-dot"></span></div></div>
+          <div id="scene" class="scene" aria-label="Üç boyutlu langırt oyun alanı" tabindex="0"></div>
+          <div id="game-overlay" class="game-overlay" hidden><span id="overlay-eyebrow"></span><strong id="overlay-title"></strong><p id="overlay-text"></p></div>
+          <div id="loading" class="loading"><span class="loader"></span>Masa hazırlanıyor…</div>
+          <div class="arena-bottom"><span id="match-status"><span class="status-dot"></span> Serbest antrenman</span><span id="connection" class="connection" title="Sunucuya gidiş-dönüş süresi">YEREL OYUN</span></div>
+        </div>
+        <div class="control-deck">
+          <div class="deck-heading"><span>ÇUBUĞUNU SEÇ</span><span class="deck-hint">Masada sürükle veya aşağıdan yönet</span></div>
+          <div class="rod-controls" id="rod-controls"></div>
+          <div class="deck-footer"><span class="keyboard-hint"><kbd>↑</kbd><kbd>↓</kbd> hareket <span>·</span> <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> çubuk <span>·</span> <kbd>BOŞLUK</kbd> şut</span><button id="shoot-button" class="shoot-button">ŞUT <span aria-hidden="true">↗</span></button></div>
+        </div>
+      </section>
+      <aside class="sidebar">
+        <section class="room-card"><div class="card-label">BİRLİKTE OYNA <span aria-hidden="true">↗</span></div><h2>Arkadaşına yer var.</h2><p class="muted">Bir kod. İki kişi. Tam bir rekabet.</p>
+          <div id="lobby-actions"><button id="create-room" class="primary-button">Oda kur <span>+</span></button><div class="or-divider"><span>veya bir odaya katıl</span></div><form id="join-form" class="join-form"><label class="sr-only" for="room-input">6 karakterli oda kodu</label><input id="room-input" name="code" autocomplete="off" autocapitalize="characters" maxlength="6" minlength="6" placeholder="ODA KODU" required pattern="[A-Za-z0-9]{6}"><button id="join-room" aria-label="Odaya katıl" type="submit">→</button></form></div>
+          <div id="room-active" hidden><div class="room-code-wrap"><div><small>ODA KODUN</small><strong id="room-code">------</strong></div><button id="copy-invite" class="icon-button" aria-label="Davet bağlantısını kopyala" title="Davet bağlantısını kopyala">⧉</button></div><div class="players"><div><span class="avatar orange-bg">1</span><span>Turuncu takım</span><span id="player0-state" class="player-state">Bekleniyor</span></div><div><span class="avatar mint-bg">2</span><span>Nane takım</span><span id="player1-state" class="player-state">Bekleniyor</span></div></div><button id="ready-button" class="primary-button">Hazırım <span>✓</span></button><button id="leave-room" class="text-button">Odadan ayrıl</button></div>
+          <p id="room-status" class="room-status" role="status">İkiniz de hazır olduğunuzda maç başlar.</p>
+          <div class="practice-switch"><button id="practice-button" class="active">Antrenman</button><button id="local-button">Aynı cihazda 2 kişi</button></div>
+        </section>
+        <section class="chat-card"><div class="chat-head"><div class="card-label">MASA SOHBETİ <span class="chat-dot"></span></div><span class="small-pill">SADECE ODANIZ</span></div><div id="chat-messages" class="chat-messages" role="log" aria-label="Oda mesajları" aria-live="polite"><div class="chat-empty"><span aria-hidden="true">☏</span><p>Maçın muhabbeti burada.<br><small>Bir odaya katılınca sohbet açılır.</small></p></div></div><form id="chat-form" class="chat-form"><label class="sr-only" for="chat-input">Sohbet mesajın</label><input id="chat-input" maxlength="200" placeholder="Güzel goldü…" autocomplete="off" disabled><button id="chat-send" aria-label="Mesajı gönder" disabled>↑</button></form></section>
+        <div class="settings-row"><label for="quality">Görüntü kalitesi</label><select id="quality"><option value="auto">Otomatik</option><option value="low">Akıcı</option><option value="high">Yüksek</option></select></div>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>AZ LAF, ÇOK GOL.</span><span>Gerçek rekabet, aynı masa. <span class="footer-ball">◉</span></span></footer>
   </main>
-  <script>
-  (()=>{
-    const canvas=document.querySelector('#game'),ctx=canvas.getContext('2d'),status=document.querySelector('#status'),scoreEls=[document.querySelector('#score1'),document.querySelector('#score2')];
-    const keys=new Set(), W=900,H=500, winScore=5; let scores=[0,0], running=true, muted=false, audio, goalPause=0, mode='local',socket=null,roomCode='',lastSync=0,ownReady=false,opponentReady=false;
-    const rods=[{x:.09,y:.5,n:1,team:0},{x:.27,y:.5,n:2,team:0},{x:.43,y:.5,n:3,team:0},{x:.57,y:.5,n:3,team:1},{x:.73,y:.5,n:2,team:1},{x:.91,y:.5,n:1,team:1}];
-    const ball={x:.5,y:.5,vx:.18,vy:.08,r:9}, hitLocks=Array(6).fill(0);
-    const FIELD={left:.025,right:.975,top:.045,bottom:.955,goalTop:.28,goalBottom:.72};
-    const rodKeys=[{up:'q',down:'a'},{up:'w',down:'s'},{up:'e',down:'d'},{up:'u',down:'j'},{up:'i',down:'k',touchUp:'ArrowUp',touchDown:'ArrowDown'},{up:'o',down:'l'}];
-    function fit(){const box=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);canvas.width=box.width*dpr;canvas.height=box.width*(H/W)*dpr;ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0)}
-    function resetBall(dir= Math.random()<.5?-1:1){ball.x=.5;ball.y=.5;ball.vx=dir*.18;ball.vy=(Math.random()-.5)*.12;hitLocks.fill(0)}
-    function beep(freq=440,duration=.09){if(muted)return;try{audio??=new AudioContext();const o=audio.createOscillator(),g=audio.createGain();o.frequency.value=freq;g.gain.setValueAtTime(.08,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+duration)}catch{}}
-    function kick(team){if(!running||goalPause>0)return;let best={distance:Infinity,gap:Infinity};rods.forEach(r=>{if(r.team!==team)return;const dx=Math.abs(ball.x-r.x);for(let i=0;i<r.n;i++){const py=r.y+(i-(r.n-1)/2)*.238,gap=Math.abs(ball.y-py),distance=dx+gap*.35;if(distance<best.distance)best={distance,gap,dx,py}}});if(best.dx>.15||best.gap>.14)return;const direction=team===0?1:-1;ball.vx=Math.max(-.56,Math.min(.56,ball.vx+direction*.27));ball.vy=Math.max(-.38,Math.min(.38,ball.vy+(ball.y-best.py)*1.15));beep(430,.06)}
-    function send(obj){if(socket?.readyState===WebSocket.OPEN)socket.send(JSON.stringify(obj))}
-    function connectRoom(action,code=''){
-      const wsUrl=(location.protocol==='https:'?'wss://':'ws://')+location.host+'/ws';roomStatus('Sunucuya bağlanıyor…');socket=new WebSocket(wsUrl);socket.addEventListener('open',()=>send({type:action,code}));
-      socket.addEventListener('message',e=>{const m=JSON.parse(e.data);
-        if(m.type==='created'||m.type==='joined'){
-          mode=m.type==='created'?'online-host':'online-guest';document.body.dataset.role=mode==='online-host'?'host':'guest';roomCode=m.code;ownReady=false;opponentReady=false;running=false;
-          const ready=document.querySelector('#online-ready');ready.hidden=false;ready.disabled=false;ready.textContent='Hazırım!';
-          roomStatus(m.type==='created'?`Oda hazır! Arkadaşın bu kodu girsin: <span class="room-code">${roomCode}</span>`:`Odaya katıldın: <span class="room-code">${roomCode}</span>`);
-          status.innerHTML=m.type==='created'?'Arkadaşın katılınca ikiniz de hazır verin.':'İkiniz de hazır verince maç başlayacak.';
-        }else if(m.type==='readyStatus'){
-          const myIndex=mode==='online-host'?0:1;ownReady=m.ready[myIndex];opponentReady=m.ready[1-myIndex];const ready=document.querySelector('#online-ready');ready.disabled=ownReady;ready.textContent=ownReady?'Hazır ✓':'Hazırım!';
-          roomStatus(ownReady?(opponentReady?'İkiniz de hazırsınız!':'Sen hazırsın; arkadaşını bekliyorsun.'):(opponentReady?'Arkadaşın hazır. Sıra sende!':'İkiniz de hazır verince maç başlayacak.'));
-        }else if(m.type==='start'){
-          document.querySelector('#online-ready').hidden=true;running=true;goalPause=0;
-          if(mode==='online-host'){scores=[0,0];scoreEls.forEach(el=>el.textContent='0');resetBall()}
-          status.innerHTML='Maç başladı! <strong>Hücum et!</strong>';roomStatus('İyi eğlenceler! Maç başladı 🎮');
-        }else if(m.type==='playerLeft'){
-          running=false;ownReady=false;opponentReady=false;const ready=document.querySelector('#online-ready');ready.hidden=false;ready.disabled=false;ready.textContent='Hazırım!';status.textContent='Arkadaşının bağlantısı koptu. Yeniden katılmasını bekleyin.';
-        }else if(m.type==='state'){
-          scores=m.scores;scoreEls.forEach((el,i)=>el.textContent=scores[i]);rods.forEach((r,i)=>r.y=m.rods[i]);Object.assign(ball,m.ball);running=m.running;draw();if(m.status)status.innerHTML=m.status;
-        }else if(m.type==='input'&&mode==='online-host'){
-          if(m.down){const fresh=!keys.has(m.key);keys.add(m.key);if(fresh&&['h','ArrowLeft'].includes(m.key))kick(1)}else keys.delete(m.key);
-        }else if(m.type==='moveRod'&&mode==='online-host'){
-          const index=Number(m.index),y=Number(m.y);if(Number.isInteger(index)&&index>=3&&index<=5&&Number.isFinite(y)){const limit=rods[index].n===3?.32:.25;rods[index].y=Math.max(limit,Math.min(1-limit,y))}
-        }else if(m.type==='chat'){addChatMessage(m.from==='host'?'Oyuncu 1':'Oyuncu 2',m.text,m.from===(mode==='online-host'?'host':'guest'))
-        }else if(m.type==='error'){roomStatus(m.message);document.querySelector('#online-ready').hidden=true;mode='local';document.body.dataset.role='';socket.close()}
-      });
-      socket.addEventListener('close',()=>{if(mode!=='local')roomStatus('Bağlantı kesildi. Yeniden oda kurabilir veya katılabilirsin.')});
-      socket.addEventListener('error',()=>roomStatus('Sunucuya ulaşılamadı. Site çevrimiçi sunucuya aktarılmalı.'));
-    }
-    function addChatMessage(sender,text,mine=false){const messages=document.querySelector('#chat-messages'),bubble=document.createElement('div');bubble.className='chat-message'+(mine?' mine':'');bubble.textContent=`${sender}: ${text}`;messages.append(bubble);messages.scrollTop=messages.scrollHeight}
-    function roomStatus(html){document.querySelector('#room-status').innerHTML=html}
-    function goal(team){scores[team]++;scoreEls[team].textContent=scores[team];beep(team===0?660:520,.22);if(scores[team]>=winScore){running=false;status.innerHTML=`<strong>${team===0?'Kırmızı':'Mavi'} kazandı! Şampiyon belli oldu! 🏆</strong>`}else{status.innerHTML=`<strong>GOL! ${team===0?'Kırmızı':'Mavi'} takım öne geçti!</strong>`;goalPause=.9;setTimeout(()=>{if(running)status.innerHTML='Maç devam ediyor. <strong>Hücum et!</strong>'},1200)}resetBall(team===0?1:-1)}
-    function draw(){ctx.clearRect(0,0,W,H);ctx.fillStyle='#28765f';ctx.fillRect(0,0,W,H);ctx.fillStyle='#2e8068';for(let x=0;x<W;x+=100)ctx.fillRect(x,0,50,H);
-      // Dış duvarlar ve çizgiler
-      ctx.fillStyle='#17394a';ctx.fillRect(0,0,W,16);ctx.fillRect(0,H-16,W,16);ctx.fillRect(0,0,16,H);ctx.fillRect(W-16,0,16,H);
-      ctx.strokeStyle='#ffffff85';ctx.lineWidth=3;ctx.strokeRect(17,17,W-34,H-34);ctx.beginPath();ctx.moveTo(W/2,17);ctx.lineTo(W/2,H-17);ctx.stroke();ctx.beginPath();ctx.arc(W/2,H/2,73,0,Math.PI*2);ctx.stroke();
-      // Derin, ağlı kale ağızları; üst ve alt direkler açıklığı belirginleştirir.
-      const goalY=H*FIELD.goalTop, goalH=H*(FIELD.goalBottom-FIELD.goalTop), mouth=42;
-      [[0,16],[W-mouth, W-16-mouth]].forEach(([x])=>{ctx.fillStyle='#102a37';ctx.fillRect(x,goalY,mouth,goalH);ctx.strokeStyle='#d9e8d9a8';ctx.lineWidth=1.5;for(let yy=goalY+10;yy<goalY+goalH;yy+=12){ctx.beginPath();ctx.moveTo(x+3,yy);ctx.lineTo(x+mouth-3,yy);ctx.stroke()}for(let xx=x+10;xx<x+mouth;xx+=12){ctx.beginPath();ctx.moveTo(xx,goalY+3);ctx.lineTo(xx,goalY+goalH-3);ctx.stroke()}});
-      ctx.lineCap='round';ctx.lineWidth=9;ctx.strokeStyle='#ffe1a1';for(const x of [18,W-18]){ctx.beginPath();ctx.moveTo(x,goalY-2);ctx.lineTo(x,goalY+goalH+2);ctx.stroke()}ctx.lineWidth=7;ctx.strokeStyle='#ff806f';for(const x of [18,W-18]){ctx.beginPath();ctx.moveTo(x,goalY);ctx.lineTo(x,goalY+goalH);ctx.stroke()}ctx.lineCap='butt';
-      ctx.fillStyle='#fff6df';ctx.font='800 13px system-ui';ctx.textAlign='center';ctx.save();ctx.translate(25,H/2);ctx.rotate(-Math.PI/2);ctx.fillText('KALE',0,0);ctx.restore();ctx.save();ctx.translate(W-25,H/2);ctx.rotate(Math.PI/2);ctx.fillText('KALE',0,0);ctx.restore();
-      rods.forEach(r=>{const px=r.x*W, py=r.y*H;ctx.fillStyle='#d9b36f';ctx.fillRect(px-5,20,10,H-40);for(let i=0;i<r.n;i++){const y=py+(i-(r.n-1)/2)*119;ctx.save();ctx.translate(px,y);ctx.fillStyle=r.team?'#80c7ff':'#ff806f';ctx.fillRect(-15,-20,30,42);ctx.beginPath();ctx.arc(0,-23,13,0,Math.PI*2);ctx.fillStyle='#ffe3a0';ctx.fill();ctx.restore()}});
-      ctx.beginPath();ctx.arc(ball.x*W,ball.y*H,ball.r,0,Math.PI*2);ctx.fillStyle='#fff6df';ctx.shadowColor='#fff';ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0}
-    function update(dt){const now=performance.now()/1000;if(running&&mode!=='online-guest'){const speed=.75;rods.forEach((r,index)=>{const control=rodKeys[index],up=keys.has(control.up)||(control.touchUp&&keys.has(control.touchUp)),down=keys.has(control.down)||(control.touchDown&&keys.has(control.touchDown)),direction=(up?-1:0)+(down?1:0),limit=r.n===3?.32:.25;r.y=Math.max(limit,Math.min(1-limit,r.y+direction*speed*dt))});
-      if(goalPause>0){goalPause=Math.max(0,goalPause-dt)}else{
-      hitLocks.forEach((v,i)=>hitLocks[i]=Math.max(0,v-dt));
-      ball.x+=ball.vx*dt;ball.y+=ball.vy*dt;ball.vx*=Math.pow(.999,dt*60);ball.vy*=Math.pow(.999,dt*60);
-      if(ball.y<FIELD.top||ball.y>FIELD.bottom){ball.y=Math.max(FIELD.top,Math.min(FIELD.bottom,ball.y));ball.vy*=-.78;beep(240,.035)}
-      rods.forEach((r,index)=>{const dx=ball.x-r.x;if(hitLocks[index]===0&&Math.abs(dx)<.027&&Math.sign(ball.vx)===-Math.sign(dx)){for(let i=0;i<r.n;i++){const py=r.y+(i-(r.n-1)/2)*.238;if(Math.abs(ball.y-py)<.082){const hitSide=Math.sign(dx)|| (r.team===0?1:-1);ball.vx=hitSide*Math.min(.56,Math.max(.24,Math.abs(ball.vx)*.92+.18));ball.vy=Math.max(-.36,Math.min(.36,ball.vy+(ball.y-py)*.9));ball.x=r.x+hitSide*.03;hitLocks[index]=.18;beep(330,.04);break}}}});
-      const inGoal=ball.y>=FIELD.goalTop+ball.r/H&&ball.y<=FIELD.goalBottom-ball.r/H;
-      if(ball.x<=FIELD.left){if(inGoal)goal(1);else{ball.x=FIELD.left;ball.vx=Math.abs(ball.vx)*.78;beep(240,.04)}}
-      if(ball.x>=FIELD.right){if(inGoal)goal(0);else{ball.x=FIELD.right;ball.vx=-Math.abs(ball.vx)*.78;beep(240,.04)}}}
-      }
-      if(mode==='online-host'&&now-lastSync>.04){send({type:'state',scores,rods:rods.map(r=>r.y),ball:{x:ball.x,y:ball.y,vx:ball.vx,vy:ball.vy},running,status:status.innerHTML});lastSync=now}
-      draw();requestAnimationFrame(t=>{const now=t/1000;const delta=Math.min(.04,now-(update.last||now));update.last=now;update(delta)})}
-    let dragging=false,dragRodIndex=null;
-    function dragRodTo(y,index){const limit=rods[index].n===3?.32:.25,position=Math.max(limit,Math.min(1-limit,y));if(mode==='online-guest'){rods[index].y=position;send({type:'moveRod',index,y:position})}else rods[index].y=position}
-    canvas.addEventListener('pointerdown',e=>{if(mode==='connecting'||mode==='online-guest'&&!running)return;const rect=canvas.getBoundingClientRect(),x=(e.clientX-rect.left)/rect.width,team=mode==='online-host'?0:mode==='online-guest'?1:(x<.5?0:1);dragRodIndex=rods.reduce((best,r,index)=>r.team===team&&Math.abs(r.x-x)<Math.abs(rods[best].x-x)?index:best,rods.findIndex(r=>r.team===team));dragging=true;canvas.setPointerCapture(e.pointerId);dragRodTo((e.clientY-rect.top)/rect.height,dragRodIndex);e.preventDefault()});
-    canvas.addEventListener('pointermove',e=>{if(!dragging||dragRodIndex===null)return;const rect=canvas.getBoundingClientRect();dragRodTo((e.clientY-rect.top)/rect.height,dragRodIndex);e.preventDefault()});
-    canvas.addEventListener('pointerup',()=>{dragging=false;dragRodIndex=null});canvas.addEventListener('pointercancel',()=>{dragging=false;dragRodIndex=null});
-    addEventListener('keydown',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(k))e.preventDefault();if(mode==='online-guest'){send({type:'input',key:k,down:true});return}const wasDown=keys.has(k);keys.add(k);if(!wasDown&&k==='f')kick(0);if(!wasDown&&k==='h')kick(1);if(!wasDown&&k==='ArrowLeft')kick(1);if(k===' '&&!running&&mode==='local'){scores=[0,0];scoreEls.forEach(x=>x.textContent='0');running=true;goalPause=0;resetBall();status.innerHTML='Maç başladı! <strong>Hücum et!</strong>'}});addEventListener('keyup',e=>{const k=e.key.length===1?e.key.toLowerCase():e.key;if(mode==='online-guest'){send({type:'input',key:k,down:false});return}keys.delete(k)});
-    document.querySelectorAll('[data-key]').forEach(b=>{const k=b.dataset.key;const on=e=>{e.preventDefault();if(mode==='online-guest'){send({type:'input',key:k,down:true});return}const wasDown=keys.has(k);keys.add(k);if(!wasDown&&k==='f')kick(0);if(!wasDown&&k==='ArrowLeft')kick(1)};const off=e=>{e.preventDefault();if(mode==='online-guest'){send({type:'input',key:k,down:false});return}keys.delete(k)};b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)});
-    document.querySelector('#online-ready').addEventListener('click',()=>{if(!['online-host','online-guest'].includes(mode))return;ownReady=true;const ready=document.querySelector('#online-ready');ready.disabled=true;ready.textContent='Hazır ✓';send({type:'ready'});roomStatus(opponentReady?'İkiniz de hazırsınız! Maç başlıyor…':'Sen hazırsın; arkadaşını bekliyorsun.')});
-    document.querySelector('#chat-toggle').addEventListener('click',()=>{const panel=document.querySelector('#chat-panel');panel.hidden=!panel.hidden;if(!panel.hidden)document.querySelector('#chat-input').focus()});document.querySelector('#chat-close').addEventListener('click',()=>{document.querySelector('#chat-panel').hidden=true});
-    document.querySelector('#chat-form').addEventListener('submit',e=>{e.preventDefault();const input=document.querySelector('#chat-input'),text=input.value.trim();if(!text)return;if(!['online-host','online-guest'].includes(mode)||socket?.readyState!==WebSocket.OPEN){roomStatus('Sohbet için önce çevrimiçi bir odaya bağlan.');return}send({type:'chat',text});input.value='';input.focus()});
-    document.querySelector('#create-room').addEventListener('click',()=>{socket?.close();mode='connecting';running=false;ownReady=false;opponentReady=false;document.querySelector('#online-ready').hidden=true;document.body.dataset.role='';document.querySelector('#chat-messages').replaceChildren();connectRoom('create')});document.querySelector('#join-room').addEventListener('click',()=>{const code=document.querySelector('#room-input').value.trim().toUpperCase();if(code.length!==6){roomStatus('Oda kodu 6 karakter olmalı.');return}socket?.close();mode='connecting';running=false;ownReady=false;opponentReady=false;document.querySelector('#online-ready').hidden=true;document.body.dataset.role='';document.querySelector('#chat-messages').replaceChildren();connectRoom('join',code)});document.querySelector('#local-play').addEventListener('click',()=>{socket?.close();mode='local';running=true;document.querySelector('#online-ready').hidden=true;document.body.dataset.role='';roomCode='';ownReady=false;opponentReady=false;keys.clear();roomStatus('Aynı cihazda oyun modu açık.');status.innerHTML='Maç başladı! <strong>Hücum et!</strong>'});
-    document.querySelector('#restart').addEventListener('click',()=>{scores=[0,0];scoreEls.forEach(x=>x.textContent='0');running=true;goalPause=0;resetBall();status.innerHTML='Maç başladı! <strong>Hücum et!</strong>';beep(500)});document.querySelector('#sound').addEventListener('click',e=>{muted=!muted;e.currentTarget.textContent=muted?'🔇 Ses kapalı':'🔊 Ses açık';e.currentTarget.setAttribute('aria-pressed',String(muted))});addEventListener('resize',fit);fit();update.last=performance.now()/1000;draw();requestAnimationFrame(t=>{const now=t/1000;update(Math.min(.04,Math.max(0,now-update.last)));update.last=now})
-  })();
-  </script>
+  <dialog id="help-dialog"><form method="dialog"><button class="dialog-close icon-button" aria-label="Kapat">×</button></form><div class="eyebrow">MASANIN KURALLARI</div><h2>Bileğini konuştur.</h2><p>Oda kur, davet bağlantısını arkadaşınla paylaş. İkiniz de <strong>Hazırım</strong> dediğinizde 3 dakikalık maç başlar. İlk 7 golü atan kazanır; süre biterse skoru yüksek olan kazanır.</p><div class="help-grid"><div><h3>Bilgisayarda</h3><p>Çubuğu fareyle tutup sürükle. <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> ile seç, oklarla hareket et, <kbd>BOŞLUK</kbd> ile şut çek.</p></div><div><h3>Tablette / telefonda</h3><p>Oyuncularını parmağınla sürükle. Alttaki üç kaydırıcıyla çubukları ayrı ayrı kontrol et. Diğer parmağınla <strong>ŞUT</strong> düğmesine bas.</p></div><div><h3>Aynı cihazda</h3><p>Turuncu: <kbd>Q/A</kbd> <kbd>W/S</kbd> <kbd>E/D</kbd>, şut <kbd>F</kbd>. Nane: <kbd>U/J</kbd> <kbd>I/K</kbd> <kbd>O/L</kbd>, şut <kbd>H</kbd>.</p></div><div><h3>Küçük bir tüyo</h3><p>Topa yandan dokun, boşluğu bul, şutunu zamanla. Arkadan gelen top kendi kalene de gidebilir.</p></div></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script>if(location.protocol==='file:'){document.querySelector('#loading').innerHTML='Bu sürüm oyun sunucusuyla açılır. Terminalde npm install ve npm start çalıştır; sonra <a href="http://localhost:3000">localhost:3000</a> adresini aç.'}</script>
+  <script type="module" src="/client.js"></script>
 </body>
 </html>
